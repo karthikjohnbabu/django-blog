@@ -30,7 +30,11 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)  # Temporary save to get user object without saving it yet
+            user.is_staff = False           # Ensure the user isn't staff
+            user.is_superuser = False       # Ensure the user isn't a superuser
+            user.save()                     # Now, save the user
+
             return redirect('register')
         else:
             print(form.errors)
@@ -39,7 +43,8 @@ def register(request):
     context = {
         'form':form,
     }
-    return render(request, 'register.html',context)
+    return render(request, 'register.html', context)
+
 
 
 def login(request):

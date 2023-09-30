@@ -28,11 +28,13 @@
       <td>{{ cat }}</td>
       <td>{{ cat.created_at }}</td>
       <td>{{ cat.updated_at }}</td>
-      <td>
+     <td>
+    {% if user.is_staff or user.is_superuser %}
         <a href="{% url 'edit_category' cat.id %}"><i class="fa fa-edit text-success"></i></a>
         &nbsp;
         <a href="{% url 'delete_category' cat.id %}"><i class="fa fa-trash text-danger"></i></a>
-      </td>
+    {% endif %}
+</td>
     </tr>
   {% endfor %}
   </tbody>
